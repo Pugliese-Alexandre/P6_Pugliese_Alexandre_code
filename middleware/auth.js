@@ -1,3 +1,5 @@
+
+// Récupération du package "JsonWebToken"
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

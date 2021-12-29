@@ -1,6 +1,10 @@
+// J'utilise "bcrypt" pour hasher le mot de passe des utilisateurs
 const bcrypt = require('bcrypt');
+
+// Package "Jsonwebtoken"
 const jwt = require('jsonwebtoken');
 
+// Pour crée un nouvel utilisateur
 const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
@@ -17,6 +21,7 @@ exports.signup = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
   };
 
+// Pour la connection d'un utilisateur
   exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
       .then(user => {
