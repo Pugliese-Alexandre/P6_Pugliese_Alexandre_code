@@ -94,3 +94,60 @@ exports.deleteThing = (req, res, next) => {
     }
   );
 };
+
+// Like et Dislike 
+
+exports.likeSauce = (req, res, next) => {
+  switch (req.body.like) {
+    // Verifier que l'utilisateur n'a pas déja aimer la sauce.
+    case 0:
+      Thing.findOne({_id: req.params.id})
+        .then((sauce) => {
+          if (sauce.usersLiked.find(user => user === req.body.userId)) {
+            Thing.updateOne({_id: req.params.id}, {
+              $inc: {likes: -1},
+              $pull: {usersLiked: req.body.userId},
+              _id: req.params.id
+            })
+              .then(() => { res.status(201).json({message: 'Ton like a été pris en compte'}); })
+              .catch((error) => { res.status(400).json({error: error}); });
+
+            // Verifier que l'utilisateur n'a pas déja retirer son like de la sauce.
+          } if (sauce.usersDisliked.find(user => user === req.body.userId)) {
+            Thing.updateOne({_id: req.params.id}, {
+              $inc: {dislikes: -1},
+              $pull: {usersDisliked: req.body.userId},
+              _id: req.params.id
+            })
+              .then(() => { res.status(201).json({message: 'Ton dislike a été pris en compte'}); })
+              .catch((error) => { res.status(400).json({error: error}); });
+          }
+        })
+        .catch((error) => { res.status(404).json({error: error}); });
+      break;
+    // Updates : likes = 1 
+    case 1:
+      Thing.updateOne({_id: req.params.id}, {
+        $inc: {likes: 1},
+        $push: {usersLiked: req.body.userId},
+        _id: req.params.id
+      })
+        .then(() => { res.status(201).json({message: 'Ton like a été pris en compte!'}); })
+        .catch((error) => { res.status(400).json({ error: error }); });
+      break;
+
+    // Updates : dislikes = -1
+    case -1:
+      Thing.updateOne({ _id: req.params.id }, {
+        $inc: {dislikes: 1},
+        $push: { usersDisliked: req.body.userId },
+        _id: req.params.id
+      })
+        .then(() => { res.status(201).json({message: 'Ton dislike a été pris en compte!'}); })
+        .catch((error) => { res.status(400).json({ error: error }); });
+      break;
+    default:
+      console.error('Mauvaise requête');
+  }
+}
+
