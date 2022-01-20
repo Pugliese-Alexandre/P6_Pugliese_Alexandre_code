@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 
   // Transformer le corps (le body) en json objet javascript utilisable
   app.use(bodyParser.json());
+  // A verifier => Remplacer  "app.use(bodyParser.json());"       par      "app.use(express.json());" 
 
   // Midleware qui permet de charger les fichiers qui sont dans le repertoire images
   app.use('/images', express.static(path.join(__dirname, 'images')));
