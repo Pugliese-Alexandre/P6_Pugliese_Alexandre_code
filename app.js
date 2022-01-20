@@ -2,8 +2,8 @@
 require('dotenv').config()
 
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
-// TEST const helmet = require('helmet');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
@@ -24,8 +24,11 @@ mongoose.connect(process.env.MONGODB,
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-  // Helmet
-// TEST   app.use(helmet());
+  // Helmet : Sécurise HTTP headers
+app.use(helmet({
+  contentSecurityPolicy : false
+  }
+));
 
   // Pour gérer les problèmes de CORS (Cross-Origin Request Sharing)
 app.use((req, res, next) => {
@@ -34,11 +37,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
-// Sécurise HTTP headers
-// TEST app.use(helmet({
-// TEST   contentSecurityPolicy : false
-// TEST   }
-// TEST ));
 
   // Transformer le corps (le body) en json objet javascript utilisable
   app.use(bodyParser.json());
