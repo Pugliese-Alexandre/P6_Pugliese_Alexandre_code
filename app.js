@@ -9,17 +9,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
-const cors = require('cors'); // Permet d'autoriser ou restreindre les ressources en fonction de l'endroit ou la requête HTTP a été lancée.
 const rateLimit = require('express-rate-limit'); // Fixe le taux limite pour les requêtes
 
 // Constante à utiliser avec le package "rateLimit".
 const limiter = rateLimit({         
   windowMs: 15 * 60 * 1000, // = 15 minutes
   max: 100
-})
-
-  // Sécurise HTTP headers
-app.use(helmet());
+}) 
 
   // Pour reussir a se connecter, mongoose va aller chercher le code dans le fichie ".env"
 mongoose.connect(process.env.MONGODB,
@@ -35,14 +31,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
-
-  // Helmet : Cross-Scripting Protection
-  // X-XSS-Protection :  Oblige le navigateur à exécuter tous les scripts.
-  // Mode=Block : Empeche le traitement de la page.
-app.use((req, res, next) => {
-  res.setHeader("X-XSS-Protection", "1; mode=block");
-  next();
-});
+// Sécurise HTTP headers
+app.use(helmet({
+  contentSecurityPolicy : false
+  }
+));
 
   // Transformer le corps (le body) en json objet javascript utilisable
   app.use(bodyParser.json());

@@ -36,6 +36,4 @@ router.post('/login', [
     ], sanitize, 
     userCtrl.login);
 
-
-
 module.exports = router;
