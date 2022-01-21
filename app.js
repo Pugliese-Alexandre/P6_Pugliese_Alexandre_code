@@ -25,13 +25,12 @@ mongoose.connect(process.env.MONGODB,
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
   // Helmet : Sécurise HTTP headers
+  // A verifier => app.use(helmet());
 
-  app.use(helmet());
-
-  // TEST app.use(helmet({
-  // TEST     contentSecurityPolicy : false
-  // TEST     }
-  // TEST   ));
+app.use(helmet({
+contentSecurityPolicy : false
+}
+));
   
   // Pour gérer les problèmes de CORS (Cross-Origin Request Sharing)
 app.use((req, res, next) => {
