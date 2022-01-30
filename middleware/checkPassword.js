@@ -1,3 +1,4 @@
+// Récupération Modèle 'Password'
 const passwordSchema = require('../models/password');
 
 // On vérifie que le mot de passe correspond au schema.

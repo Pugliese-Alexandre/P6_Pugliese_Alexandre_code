@@ -1,4 +1,4 @@
-
+// Empêche l'utilisateur de créé une sauce avec des champs vide (nom, descriptions,...) 
 module.exports = (req, res, next) => {
     const sauce = JSON.parse(req.body.sauce)
     let {name, manufacturer,description, mainPepper} = sauce;
