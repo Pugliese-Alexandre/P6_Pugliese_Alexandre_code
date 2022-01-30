@@ -17,7 +17,7 @@ router.post('/', auth, sauceLimiter, multer, checkSauce, stuffCtrl.createThing);
 router.get('/:id', auth, stuffCtrl.getOneThing);
 
 // Route qui permet de modifier "une sauce"
-router.put('/:id', auth, sauceLimiter, multer, checkSauce, stuffCtrl.modifyThing);
+router.put('/:id', auth, sauceLimiter, multer, stuffCtrl.modifyThing);
 
 // Route qui permet de supprimer "une sauce"
 router.delete('/:id', auth, stuffCtrl.deleteThing);
