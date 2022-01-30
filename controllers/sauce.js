@@ -1,5 +1,5 @@
 // Récupération Modèle 'sauce'
-const Thing = require('../models/thing');
+const Thing = require('../models/sauce');
 
 // Plugin :
 const fs = require('fs');

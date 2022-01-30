@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 const checkSauce = require('../middleware/checkSauce');
-const stuffCtrl = require('../controllers/stuff');
+const stuffCtrl = require('../controllers/sauce');
 const sauceLimiter = require ('../middleware/sauceLimiter');
-
-
 
 // Création des différentes route de l'API.
 // Route qui permet de récupérer toutes les sauces
