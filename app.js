@@ -1,7 +1,8 @@
-// Utilisation du module "dotenv" pour masquer les informations de connexion à la base de données
+// Utilisation de "dotenv" pour masquer les informations de connexion à la base de données.
 require('dotenv').config()
 
 const express = require('express');
+// Helmet : Modules intégrés pour augmenter la sécurité de l'application Express.
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -9,13 +10,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
-const rateLimit = require('express-rate-limit'); // Fixe le taux limite pour les requêtes
-
-// Constante à utiliser avec le package "rateLimit".
-const limiter = rateLimit({         
-  windowMs: 15 * 60 * 1000, // = 15 minutes
-  max: 100
-}) 
+const rateLimit = require("express-rate-limit");
 
   // Pour reussir a se connecter, mongoose va aller chercher le code dans le fichie ".env"
 mongoose.connect(process.env.MONGODB,
@@ -24,14 +19,9 @@ mongoose.connect(process.env.MONGODB,
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-  // Helmet : Sécurise HTTP headers
-  // A verifier => app.use(helmet());
+  // Utilisation d'Helmet : Sécurise HTTP headers
+app.use(helmet());
 
-app.use(helmet({
-contentSecurityPolicy : false
-}
-));
-  
   // Pour gérer les problèmes de CORS (Cross-Origin Request Sharing)
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -40,9 +30,7 @@ app.use((req, res, next) => {
     next();
   });
 
-  // Transformer le corps (le body) en json objet javascript utilisable
-  app.use(bodyParser.json());
-  // A verifier => Remplacer  "app.use(bodyParser.json());"       par      "app.use(express.json());" 
+  app.use(express.json());
 
   // Midleware qui permet de charger les fichiers qui sont dans le repertoire images
   app.use('/images', express.static(path.join(__dirname, 'images')));
