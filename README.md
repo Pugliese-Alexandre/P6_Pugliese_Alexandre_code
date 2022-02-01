@@ -11,6 +11,7 @@ Pour lancer l'application :
 - Démarrer avec "npm run start".
 - Sélectionner le dossier "Backend".
 - Ouvrir le terminal sur ce dossier.
+- Installer les dépendances "npm i".
 - Exécuter le package nodemon "npm install -g nodemon".
 - Exécuter "nodemon run start" pour lancer le serveur. 
 

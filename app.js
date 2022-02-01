@@ -7,10 +7,8 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
-const bodyParser = require('body-parser');
 const stuffRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
-const rateLimit = require("express-rate-limit");
 
   // Pour reussir a se connecter, mongoose va aller chercher le code dans le fichie ".env"
 mongoose.connect(process.env.MONGODB,
